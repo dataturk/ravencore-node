@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -9,10 +9,10 @@ version="2.5.1.0"
 url="https://github.com/RavenProject/Ravencoin/releases/download"
 tag="v2.5.1"
 
-if [ "${platform}" == "linux" ]; then
-    if [ "${arch}" == "x86_64" ]; then
+if [[ "${platform}" == "linux" ]]; then
+    if [[ "${arch}" == "x86_64" ]]; then
         tarball_name="raven-${version}-x86_64-linux-gnu.tar.gz"
-    elif [ "${arch}" =~ "arm" ]; then
+    elif [[ "${arch}" =~ "arm" ]]; then
         tarball_name="raven-2.5.1.0-arm-linux-gnueabihf.tar.gz"
     else
         echo "Ravencoin binary distribution not available for platform and architecture"
