@@ -12,6 +12,8 @@ tag="v2.5.1"
 if [ "${platform}" == "linux" ]; then
     if [ "${arch}" == "x86_64" ]; then
         tarball_name="raven-${version}-x86_64-linux-gnu.tar.gz"
+    if [ "${arch}" =~ "arm"]; then
+        tarball_name="raven-2.5.1.0-arm-linux-gnueabihf.tar.gz"
     else
         echo "Ravencoin binary distribution not available for platform and architecture"
         exit -1
@@ -22,7 +24,7 @@ else
 fi
 
 binary_url="${url}/${tag}/${tarball_name}"
-shasums_url="${url}/${tag}/SHA256SUMS.asc"
+shasums_url="${url}/${tag}/${tarball_name}.sha256sum"
 
 download_ravend() {
 
