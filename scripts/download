@@ -5,26 +5,31 @@ set -e
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
 platform=`uname -a | awk '{print tolower($1)}'`
 arch=`uname -m`
-version="2.5.1.0"
 url="https://github.com/RavenProject/Ravencoin/releases/download"
-tag="v2.5.1"
+version="3.3.1.0"
+tag="v3.3.1"
 
 if [[ "${platform}" == "linux" ]]; then
     if [[ "${arch}" == "x86_64" ]]; then
-        tarball_name="raven-${version}-x86_64-linux-gnu.tar.gz"
+        # e.g. raven-3.3.1.0-x86_64-linux-gnu.tar.gz
+        archive_name="raven-${version}-x86_64-linux-gnu.tar.gz"
     elif [[ "${arch}" =~ "arm" ]]; then
-        tarball_name="raven-2.5.1.0-arm-linux-gnueabihf.tar.gz"
+        # e.g. raven-3.3.1.0-arm-linux-gnueabihf.tar.gz
+        archive_name="raven-${version}-arm-linux-gnueabihf.tar.gz"
     else
-        echo "Ravencoin binary distribution not available for platform and architecture"
+        echo "Ravencoin binary distribution not found for linux architecture: ${arch}"
         exit -1
     fi
+elif [[ "${platform}" == "darwin" ]]; then
+    # e.g. raven-3.3.1.0-osx.dmg
+    archive_name="raven-3.3.1.0-osx.dmg"
 else
-    echo "Ravencoin binary distribution not available for platform and architecture"
+    echo "Ravencoin binary distribution not found for platform and architecture (${platform}/${arch})"
     exit -1
 fi
 
-binary_url="${url}/${tag}/${tarball_name}"
-shasums_url="${url}/${tag}/${tarball_name}.sha256sum"
+binary_url="${url}/${tag}/${archive_name}"
+shasums_url="${url}/${tag}/${archive_name}.sha256sum"
 
 download_ravend() {
 
@@ -42,18 +47,27 @@ download_ravend() {
 
     if test $? -eq 0; then
         if [ "${is_curl}" = true ]; then
-            curl -L $binary_url > $tarball_name
+            curl -L $binary_url > $archive_name
             curl -L $shasums_url > SHA256SUMS.asc
         else
             wget $binary_url
             wget $shasums_url
         fi
-        if test -e "${tarball_name}"; then
+        if test -e "${archive_name}"; then
             echo "Unpacking ravencoin distribution"
-            tar -xvzf $tarball_name
-            if test $? -eq 0; then
-                ln -sf "raven-${version}/bin/ravend"
-                return;
+            if [[ "${platform}" == "linux" ]]; then            
+                tar -xvzf $archive_name
+                if test $? -eq 0; then
+                    ln -sf "raven-${version}/bin/ravend"
+                    return;
+                fi
+            elif [[ "${platform}" == "darwin" ]]; then
+                hdiutil mount $archive_name
+                if test $? -eq 0; then
+                    cp /Volumes/Raven\ Core/Raven-Qt.app/Contents/MacOS/ravend .
+                    hdiutil unmount /Volumes/Raven\ Core
+                    return;
+                fi
             fi
         fi
     fi
@@ -71,8 +85,8 @@ verify_download() {
         shasum_cmd="sha256sum"
     fi
 
-    download_sha=$(${shasum_cmd} "${root_dir}/bin/${tarball_name}" | awk '{print $1}')
-    expected_sha=$(cat "${root_dir}/bin/SHA256SUMS.asc" | grep "${tarball_name}" | awk '{print $1}')
+    download_sha=$(${shasum_cmd} "${root_dir}/bin/${archive_name}" | awk '{print $1}')
+    expected_sha=$(cat "${root_dir}/bin/SHA256SUMS.asc" | grep "${archive_name}" | awk '{print $1}')
     echo "Checksum (download): ${download_sha}"
     echo "Checksum (verified): ${expected_sha}"
     if [ "${download_sha}" != "${expected_sha}" ]; then
