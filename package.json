@@ -11,7 +11,6 @@
   },
   "bin": {
     "ravencore-node": "./bin/ravencore-node",
-    "ravend": "./bin/ravend"
   },
   "scripts": {
     "download": "./scripts/download",
