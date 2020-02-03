@@ -10,7 +10,7 @@
     "url": "https://github.com/RavenDevKit/ravencore-node/issues"
   },
   "bin": {
-    "ravencore-node": "./bin/ravencore-node",
+    "ravencore-node": "./bin/ravencore-node"
   },
   "scripts": {
     "download": "./scripts/download",
