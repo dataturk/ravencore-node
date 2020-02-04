@@ -10,12 +10,12 @@
     "url": "https://github.com/RavenDevKit/ravencore-node/issues"
   },
   "bin": {
-    "ravencore-node": "./bin/ravencore-node",
-    "ravend": "./bin/ravend"
+    "ravencore-node": "./bin/ravencore-node"
   },
   "scripts": {
-    "download": "./scripts/download",
-    "verify": "./scripts/download --skip-ravencoin-download --verify-ravencoin-download",
+    "preinstall": "./scripts/download",
+    "download-ravend": "./scripts/download",
+    "verify-ravend": "./scripts/download --skip-ravencoin-download --verify-ravencoin-download",
     "test": "mocha -R spec --recursive",
     "regtest": "./scripts/regtest",
     "jshint": "jshint --reporter=node_modules/jshint-stylish ./lib",
