@@ -6,15 +6,15 @@ root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
 platform=`uname -a | awk '{print tolower($1)}'`
 arch=`uname -m`
 url="https://github.com/RavenProject/Ravencoin/releases/download"
-version="3.3.1.0"
-tag="v3.3.1"
+version="4.1.0.0"
+tag="v4.1.0"
 
 if [[ "${platform}" == "linux" ]]; then
     if [[ "${arch}" == "x86_64" ]]; then
-        # e.g. raven-3.3.1.0-x86_64-linux-gnu.tar.gz
+        # e.g. raven-4.1.0.0-x86_64-linux-gnu.tar.gz
         archive_name="raven-${version}-x86_64-linux-gnu.tar.gz"
     elif [[ "${arch}" =~ "arm" ]]; then
-        # e.g. raven-3.3.1.0-arm-linux-gnueabihf.tar.gz
+        # e.g. raven-4.1.0.0-arm-linux-gnueabihf.tar.gz
         archive_name="raven-${version}-arm-linux-gnueabihf.tar.gz"
     else
         echo "Ravencoin binary distribution not found for linux architecture: ${arch}"
@@ -22,7 +22,7 @@ if [[ "${platform}" == "linux" ]]; then
     fi
 elif [[ "${platform}" == "darwin" ]]; then
     # e.g. raven-3.3.1.0-osx.dmg
-    archive_name="raven-3.3.1.0-osx.dmg"
+    archive_name="raven-4.1.0.0-osx.dmg"
 else
     echo "Ravencoin binary distribution not found for platform and architecture (${platform}/${arch})"
     exit -1
