@@ -4,10 +4,10 @@
   "author": "Under",
   "version": "1.0.3",
   "main": "./index.js",
-  "repository": "git://github.com/RavenDevKit/ravencore-node.git",
-  "homepage": "https://github.com/RavenDevKit/ravencore-node",
+  "repository": "git://github.com/dataturk/ravencore-node.git",
+  "homepage": "https://github.com/dataturk/ravencore-node",
   "bugs": {
-    "url": "https://github.com/RavenDevKit/ravencore-node/issues"
+    "url": "https://github.com/dataturk/ravencore-node/issues"
   },
   "bin": {
     "ravencore-node": "./bin/ravencore-node"
@@ -28,8 +28,8 @@
   ],
   "dependencies": {
     "async": "2.6.2",
-    "ravend-rpc": "RavenDevKit/ravend-rpc",
-    "ravencore-lib": "RavenDevKit/ravencore-lib",
+    "ravend-rpc": "dataturk/ravend-rpc",
+    "ravencore-lib": "dataturk/ravencore-lib",
     "body-parser": "1.18.3",
     "colors": "1.3.3",
     "commander": "2.20.0",
@@ -58,7 +58,7 @@
     "jshint-stylish": "^2.1.0",
     "mocha": "^5.0.5",
     "proxyquire": "^1.3.1",
-    "ravencore-p2p": "RavenDevKit/ravencore-p2p",
+    "ravencore-p2p": "dataturk/ravencore-p2p",
     "rimraf": "^2.4.2",
     "sinon": "^4.4.8"
   },
